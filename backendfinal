@@ -1,0 +1,50 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+#include <string.h>
+
+// Função para verificar se a string é um palíndromo
+bool checkPalindrome(char *str) {
+    int len = strlen(str);
+    for (int i = 0, j = len - 1; i < j; i++, j--) {
+        if (str[i] != str[j]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+// Função para contar o número de ocorrências de cada caractere na string
+void countOccurrences(char *str, int *occurrences) {
+    for (int i = 0; str[i] != '\0'; i++) {
+        occurrences[str[i]]++;
+    }
+}
+
+int main() {
+    char texto[100];
+    int occurrences[256] = {0}; // Inicializa o array com 0
+
+    printf("Digite uma string: ");
+    fgets(texto, sizeof(texto), stdin);
+    texto[strcspn(texto, "\n")] = '\0'; // Remove o caractere de nova linha inserido pelo fgets
+
+    // Verificar se a string é um palíndromo
+    bool isPalindrome = checkPalindrome(texto);
+
+    // Contar o número de ocorrências de cada caractere na string
+    countOccurrences(texto, occurrences);
+
+    // Imprimir se é palíndromo
+    printf("Palindromo: %s\n", isPalindrome ? "true" : "false");
+
+    // Imprimir o número de ocorrências de cada caractere
+    printf("Ocorrencias de caracteres:\n");
+    for (int i = 0; i < 256; i++) {
+        if (occurrences[i] != 0) {
+            printf("%c: %d\n", (char)i, occurrences[i]);
+        }
+    }
+
+    return 0;
+}
